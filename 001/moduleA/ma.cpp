@@ -1,4 +1,5 @@
 #include <iostream>
+#include "ma.h"
 using namespace std;
 int ma_init(void)
 {
