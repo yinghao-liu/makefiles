@@ -46,11 +46,14 @@ AR=$(CROSS_COMPILE)ar
 
 $(TARGET):$(TARGET).o $(OBJ)
 
+# at the very beginning, there is no $(DEP), but all files would be compiled
+# $(DEP) would be generated too, it will works then.
+# but if you delete one .d file, and then edit related .h file, it can't works.
 -include $(DEP)
 
 distclean:clean
 	rm -rf $(OBJ) $(DEP)
 clean:
-	rm -rf main *.o *.d
+	rm -rf $(TARGET) *.o *.d
 
 .PHONY:distclean clean
