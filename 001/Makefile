@@ -12,9 +12,15 @@ LDFLAGS=-Llibs/$(PLATFORM)
 
 all:x64
 
-#main.o:CXXFLAGS+=`pkg-config --cflags opencv`
-#LDLIBS=`pkg-config --libs opencv` -l3rdparty
-LDLIBS=-l3rdparty
+# main.o:CXXFLAGS+=`pkg-config --cflags opencv`
+# LDLIBS=`pkg-config --libs opencv` -l3rdparty
+
+# default link rule $(LOADLIBES) $(LDLIBS)
+# It makes a difference where in the command you write this option;
+# the linker searches and processes libraries and object files in the order they are
+# specified.  Thus, foo.o -lz bar.o searches library z after file foo.o but before bar.o.
+# If bar.o refers to functions in z, those functions may not be loaded.(man gcc)
+LOADLIBES=-l3rdparty
 
 
 # there is no need modification below
