@@ -7,10 +7,14 @@ TARGET=main
 INCLUDE_DIR=include
 MODULE_DIR=moduleA moduleB
 
-CXXFLAGS:= -g -std=c++11 -MMD
-LDFLAGS=-Llibs/$(PLATFORM)
-
 all:x64
+DEBUG?=1
+
+CXXFLAGS:=-std=c++17 -MMD
+ifeq ($(DEBUG),1)
+CXXFLAGS+=-g
+endif
+LDFLAGS=-Llibs/$(PLATFORM)
 
 # main.o:CXXFLAGS+=`pkg-config --cflags opencv`
 # LDLIBS=`pkg-config --libs opencv` -l3rdparty
@@ -21,14 +25,6 @@ all:x64
 # specified.  Thus, foo.o -lz bar.o searches library z after file foo.o but before bar.o.
 # If bar.o refers to functions in z, those functions may not be loaded.(man gcc)
 LOADLIBES=-l3rdparty
-
-
-# there is no need modification below
-SRC:=$(foreach mod,$(MODULE_DIR),$(wildcard $(mod)/*.cpp))
-OBJ:=$(patsubst %.cpp,%.o,$(SRC))
-DEP:=$(patsubst %.cpp,%.d,$(SRC))
-CXXFLAGS+=$(addprefix -I,$(INCLUDE_DIR) $(MODULE_DIR))
-
 
 # supported platform 
 arm:PLATFORM=arm
@@ -41,6 +37,18 @@ x64:CXX=g++
 x64:$(TARGET)
 	@echo "make x64"	
 
+help:
+	@echo "make [x64|arm] [DEBUG=1|0], the first one is the default"
+	@echo "make <help|clean|distclean>"
+
+
+#*************************************************************
+# there is no need modification below
+#*************************************************************
+SRC:=$(foreach mod,$(MODULE_DIR),$(wildcard $(mod)/*.cpp))
+OBJ:=$(patsubst %.cpp,%.o,$(SRC))
+DEP:=$(patsubst %.cpp,%.d,$(SRC))
+CXXFLAGS+=$(addprefix -I,$(INCLUDE_DIR) $(MODULE_DIR))
 
 BUILD = $(shell date +%c)
 VERSION = "$(TARGET) version $(MAJOR).$(MINOR).$(REVISION)\ncompiled $(BUILD)\n"
