@@ -10,11 +10,13 @@ MODULE_DIR=moduleA moduleB
 all:x64
 DEBUG?=1
 
-CXXFLAGS:=-std=c++17 -MMD
-ifeq ($(DEBUG),1)
-CXXFLAGS+=-g
-endif
+CXXFLAGS=-std=c++17 -MMD
 LDFLAGS=-Llibs/$(PLATFORM)
+ifeq ($(DEBUG),1)
+FSANITIZE=-fsanitize=address #-fsanitize-recover=address
+CXXFLAGS+=-g $(FSANITIZE)
+LDFLAGS+=$(FSANITIZE)
+endif
 
 # main.o:CXXFLAGS+=`pkg-config --cflags opencv`
 # LDLIBS=`pkg-config --libs opencv` -l3rdparty
