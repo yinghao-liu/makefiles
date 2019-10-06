@@ -4,10 +4,21 @@ cmake_minimum_required(VERSION 3.10)
 project(main VERSION 1.0.0.0)
 configure_file(mainConfig.h.in mainConfig.h)
 
+# specify the C++ standard
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+
 # add the executable
 add_executable(main main.cpp)
 
 
 # include dir, should in the end of CMakeLists.txt
-target_include_directories(main PUBLIC ${PROJECT_BINARY_DIR})
+target_include_directories(main PUBLIC 
+							"${PROJECT_BINARY_DIR}"
+							"${PROJECT_SOURCE_DIR}/moduleA"
+							)
 
+# sub module
+add_subdirectory(moduleA)
+target_link_libraries(main PUBLIC moduleA)
