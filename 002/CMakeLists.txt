@@ -22,7 +22,7 @@ if(USE_MA)
 endif()
 
 
-# include dir, should in the end of CMakeLists.txt
+# include dir, should in the end of taget build
 target_include_directories(main PUBLIC 
 						"${PROJECT_BINARY_DIR}"
 						)
@@ -32,5 +32,19 @@ target_include_directories(main PUBLIC
 set(CMAKE_INSTALL_PREFIX "./install")
 install(TARGETS main DESTINATION bin)
 install(FILES "${PROJECT_BINARY_DIR}/mainConfig.h"
-	  DESTINATION include
+		DESTINATION include
 	    )
+
+
+# test
+# Add a test to the project to be run by ctest(1).
+enable_testing()
+
+# does the application run
+add_test(NAME Runs COMMAND main anything)
+
+# does the usage message work?
+add_test(NAME Usage COMMAND main)
+set_tests_properties(Usage
+					PROPERTIES PASS_REGULAR_EXPRESSION "Usage:"
+	    			)

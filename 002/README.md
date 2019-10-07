@@ -1,7 +1,8 @@
 # 002 CMake of a large project
 
 ## Description
-`mkdir build && cd build && cmake .. && make`
+`mkdir build && cd build && cmake .. && make`, then
+`make install` or `ctest`
 
 ## note
 when use `option` at first time, it set as a cache variable, `cmake -L` to check Cache values.  
