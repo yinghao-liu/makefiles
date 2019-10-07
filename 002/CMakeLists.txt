@@ -26,3 +26,11 @@ endif()
 target_include_directories(main PUBLIC 
 						"${PROJECT_BINARY_DIR}"
 						)
+
+
+# install
+set(CMAKE_INSTALL_PREFIX "./install")
+install(TARGETS main DESTINATION bin)
+install(FILES "${PROJECT_BINARY_DIR}/mainConfig.h"
+	  DESTINATION include
+	    )
