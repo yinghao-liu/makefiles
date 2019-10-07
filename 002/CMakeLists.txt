@@ -48,3 +48,9 @@ add_test(NAME Usage COMMAND main)
 set_tests_properties(Usage
 					PROPERTIES PASS_REGULAR_EXPRESSION "Usage:"
 	    			)
+
+include(InstallRequiredSystemLibraries)
+# set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/License.txt")
+set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
+set(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
+include(CPack)
