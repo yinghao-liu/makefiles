@@ -19,12 +19,10 @@ option(USE_MA "Use ModuleA implementation" ON)
 if(USE_MA)
 	add_subdirectory(moduleA)
 	target_link_libraries(main PUBLIC moduleA)
-	list(APPEND EXTRA_INCLUDES "${PROJECT_SOURCE_DIR}/moduleA")
 endif()
 
 
 # include dir, should in the end of CMakeLists.txt
 target_include_directories(main PUBLIC 
 						"${PROJECT_BINARY_DIR}"
-						"${EXTRA_INCLUDES}"
 						)
