@@ -11,20 +11,22 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 
 # add the executable
-add_executable(main main.cpp)
-
+#add_executable(main main.cpp)
+add_executable(main main.cpp $<TARGET_OBJECTS:moduleA> $<TARGET_OBJECTS:moduleB>)
+add_subdirectory("essentials/moduleA")
+add_subdirectory("essentials/moduleB")
+#target_link_libraries(main PUBLIC moduleA)
 
 # sub module
 option(USE_MA "Use ModuleA implementation" ON)
 if(USE_MA)
-	add_subdirectory(moduleA)
-	target_link_libraries(main PUBLIC moduleA)
 endif()
 
 
 # include dir, should in the end of taget build
 target_include_directories(main PUBLIC 
 						"${PROJECT_BINARY_DIR}"
+						"include/essentials"
 						)
 
 

@@ -1,8 +1,18 @@
 #include <stdio.h>
+// config
 #include "mainConfig.h"
+
+// components
 //#include "3rdparty.h"
+
+// essentials
 #include "ma.h"
-//#include "mb.h"
+#include "mb.h"
+
+// applications
+
+
+
 void usage(void)
 {
 	printf("Usage:%s arg\n", PROJECT_NAME);
@@ -10,7 +20,6 @@ void usage(void)
 int main(int argc, char *argv[])
 {
 	//thirdparty_init();
-	//mb_init();
 	if (argc < 2) {
 		usage();
 		return -1;
@@ -22,5 +31,6 @@ int main(int argc, char *argv[])
 	
 	printf("-------------------------------------\n");
 	ma_init();
+	mb_init();
 	return 0;
 }
