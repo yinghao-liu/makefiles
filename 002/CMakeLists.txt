@@ -11,15 +11,19 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 
 # add the executable
-#add_executable(main main.cpp)
-add_executable(main main.cpp $<TARGET_OBJECTS:moduleA> $<TARGET_OBJECTS:moduleB>)
+add_executable(main main.cpp
+			$<TARGET_OBJECTS:moduleA>
+			$<TARGET_OBJECTS:moduleB>
+			)
+# essentials are all object library
 add_subdirectory("essentials/moduleA")
 add_subdirectory("essentials/moduleB")
-#target_link_libraries(main PUBLIC moduleA)
+
 
 # sub module
 option(USE_MA "Use ModuleA implementation" ON)
 if(USE_MA)
+#target_link_libraries(main PUBLIC moduleA)
 endif()
 
 
