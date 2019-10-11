@@ -4,22 +4,22 @@ all:x64
 
 arm:TARGET=arm
 arm:CXX=arm-linux-gnueabihf-g++
-arm:lib3rdparty.a
+arm:libopensource.a
 	@echo "make arm"	
 
 x64:TARGET=x64
 x64:CXX=g++
-x64:lib3rdparty.a
+x64:libopensource.a
 	@echo "make x64"	
 
 CC=$(CXX)
 CROSS_COMPILE=$(subst g++,,$(CXX))
 AR=$(CROSS_COMPILE)ar
 
-lib3rdparty.a:3rdparty.o
+libopensource.a:opensource.o
 	$(AR) rs $@ $<
-	cp -f $@ ../001/libs/$(TARGET)/
+	cp -f $@ ../../001/libs/$(TARGET)/
 
 
 clean:
-	rm -rf lib3rdparty.a 3rdparty.o
+	rm -rf *.a *.o

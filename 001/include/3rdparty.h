@@ -1,1 +1,1 @@
-../../3rdparty/3rdparty.h
+../../others/3rdparty/3rdparty.h
