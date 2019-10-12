@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 
 # set the project name
 project(main VERSION 1.0.0.0)
-configure_file(mainConfig.h.in mainConfig.h)
+configure_file(${PROJECT_NAME}Config.h.in ${PROJECT_NAME}Config.h)
 
 
 # specify the C++ standard
@@ -11,7 +11,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 
 # add the executable
-add_executable(main main.cpp
+add_executable(${PROJECT_NAME} ${PROJECT_NAME}.cpp
 			$<TARGET_OBJECTS:moduleA>
 			$<TARGET_OBJECTS:moduleB>
 			)
@@ -19,25 +19,43 @@ add_executable(main main.cpp
 add_subdirectory("essentials/moduleA")
 add_subdirectory("essentials/moduleB")
 
+# libs include components and applications
+# components include thirdparty and open source project
+add_library(foo STATIC IMPORTED)
+set_property(TARGET foo PROPERTY IMPORTED_LOCATION 
+			"${PROJECT_SOURCE_DIR}/libs/x64/components/lib3rdparty.a"
+			)
+add_library(bar STATIC IMPORTED)
+set_property(TARGET bar PROPERTY IMPORTED_LOCATION 
+			"${PROJECT_SOURCE_DIR}/libs/x64/components/libopensource.a"
+			)
 
-# sub module
+target_link_libraries(${PROJECT_NAME} PUBLIC 
+					foo
+					bar
+					)
+
+# applications are individual modules
+# sub module(applications)
+# use -U option to remove
 option(USE_MA "Use ModuleA implementation" ON)
 if(USE_MA)
-#target_link_libraries(main PUBLIC moduleA)
+	#target_link_libraries(${PROJECT_NAME} PUBLIC moduleA)
 endif()
 
 
 # include dir, should in the end of taget build
-target_include_directories(main PUBLIC 
+target_include_directories(${PROJECT_NAME} PUBLIC 
 						"${PROJECT_BINARY_DIR}"
+						"include/components"
 						"include/essentials"
 						)
 
 
 # install
 set(CMAKE_INSTALL_PREFIX "./install")
-install(TARGETS main DESTINATION bin)
-install(FILES "${PROJECT_BINARY_DIR}/mainConfig.h"
+install(TARGETS ${PROJECT_NAME} DESTINATION bin)
+install(FILES "${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.h"
 		DESTINATION include
 	    )
 
@@ -47,10 +65,10 @@ install(FILES "${PROJECT_BINARY_DIR}/mainConfig.h"
 enable_testing()
 
 # does the application run
-add_test(NAME Runs COMMAND main anything)
+add_test(NAME Runs COMMAND ${PROJECT_NAME} anything)
 
 # does the usage message work?
-add_test(NAME Usage COMMAND main)
+add_test(NAME Usage COMMAND ${PROJECT_NAME})
 set_tests_properties(Usage
 					PROPERTIES PASS_REGULAR_EXPRESSION "Usage:"
 	    			)

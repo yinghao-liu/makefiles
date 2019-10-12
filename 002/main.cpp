@@ -3,7 +3,8 @@
 #include "mainConfig.h"
 
 // components
-//#include "3rdparty.h"
+#include "3rdparty.h"
+#include "opensource.h"
 
 // essentials
 #include "ma.h"
@@ -19,7 +20,6 @@ void usage(void)
 }
 int main(int argc, char *argv[])
 {
-	//thirdparty_init();
 	if (argc < 2) {
 		usage();
 		return -1;
@@ -32,5 +32,7 @@ int main(int argc, char *argv[])
 	printf("-------------------------------------\n");
 	ma_init();
 	mb_init();
+	thirdparty_init();
+	opensource_init();
 	return 0;
 }

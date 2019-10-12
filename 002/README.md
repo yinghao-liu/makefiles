@@ -13,4 +13,5 @@ so, if you change the option you should remove the entries from CMake cache by u
 1. [tutorial](https://cmake.org/cmake/help/latest/guide/tutorial/index.html)
 2. [cmake option](https://cmake.org/cmake/help/latest/command/option.html)
 3. [PRIVATE,PUBLIC,INTERFA](https://blog.csdn.net/turbock/article/details/90034787)
+4. [cmake-cant-find-imported-library](https://stackoverflow.com/questions/23565564/cmake-cant-find-imported-library)
 
