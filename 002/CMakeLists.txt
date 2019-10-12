@@ -50,8 +50,8 @@ endif()
 # include dir, should in the end of taget build
 target_include_directories(${PROJECT_NAME} PUBLIC 
 						"${PROJECT_BINARY_DIR}"
-						"include/components"
 						"include/essentials"
+						"include/components"
 						)
 
 
