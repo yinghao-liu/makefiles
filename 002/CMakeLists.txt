@@ -38,9 +38,12 @@ target_link_libraries(${PROJECT_NAME} PUBLIC
 # applications are individual modules
 # sub module(applications)
 # use -U option to remove
-option(USE_MA "Use ModuleA implementation" ON)
-if(USE_MA)
-	#target_link_libraries(${PROJECT_NAME} PUBLIC moduleA)
+add_subdirectory("applications/app1")
+target_link_libraries(${PROJECT_NAME} PUBLIC app1)
+option(APP2 "Use ModuleA implementation" ON)
+if(APP2)
+	add_subdirectory("applications/app2")
+	target_link_libraries(${PROJECT_NAME} PUBLIC app2)
 endif()
 
 

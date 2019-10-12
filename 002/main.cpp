@@ -11,6 +11,8 @@
 #include "mb.h"
 
 // applications
+#include "app1.h"
+#include "app2.h"
 
 
 
@@ -34,5 +36,7 @@ int main(int argc, char *argv[])
 	mb_init();
 	thirdparty_init();
 	opensource_init();
+	app1_init();
+	app2_init();
 	return 0;
 }
