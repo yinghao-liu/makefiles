@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdint.h> // for uint32_t ..
 // config
 #include "mainConfig.h"
 
@@ -26,6 +27,9 @@ int main(int argc, char *argv[])
 		usage();
 		return -1;
 	}
+	uint32_t i = 32;
+	printf("uint32_t %I32d\n", i);
+
 	printf("PROJECT_NAME: %s\n", PROJECT_NAME);
 	printf("PROJECT_SOURCE_DIR: %s\n", PROJECT_SOURCE_DIR);
 	printf("PROJECT_BINARY_DIR: %s\n", PROJECT_BINARY_DIR);
