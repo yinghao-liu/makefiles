@@ -50,6 +50,7 @@ help:
 SRC:=$(foreach mod,$(MODULE_DIR),$(wildcard $(mod)/*.cpp))
 OBJ:=$(patsubst %.cpp,%.o,$(SRC))
 DEP:=$(patsubst %.cpp,%.d,$(SRC))
+DEP+=$(TARGET).d
 CXXFLAGS+=$(addprefix -I,$(INCLUDE_DIR) $(MODULE_DIR))
 
 BUILD = $(shell date +%c)
