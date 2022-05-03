@@ -9,8 +9,11 @@ MODULE_DIR=moduleA moduleB
 
 all:x64
 DEBUG?=1
+SRC_SUFFIX?=.cpp
 
-CXXFLAGS=-std=c++17 -MMD
+
+# -std use the default one
+CXXFLAGS=-MMD
 LDFLAGS=-Llibs/$(PLATFORM)
 ifeq ($(DEBUG),1)
 FSANITIZE=-fsanitize=address #-fsanitize-recover=address
@@ -21,7 +24,8 @@ endif
 # main.o:CXXFLAGS+=`pkg-config --cflags opencv`
 # LDLIBS=`pkg-config --libs opencv` -l3rdparty
 
-# default link rule $(LOADLIBES) $(LDLIBS)
+# default compile rule is `$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c`
+# default link rule is '$(CC) $(LDFLAGS) n.o $(LOADLIBES) $(LDLIBS)'
 # It makes a difference where in the command you write this option;
 # the linker searches and processes libraries and object files in the order they are
 # specified.  Thus, foo.o -lz bar.o searches library z after file foo.o but before bar.o.
@@ -30,26 +34,25 @@ LOADLIBES=-l3rdparty
 
 # supported platform 
 arm:PLATFORM=arm
-arm:CXX=arm-linux-gnueabihf-g++
+arm:CROSS_COMPILE=arm-linux-gnueabihf-
 arm:$(TARGET)
 	@echo "make arm"	
 
 x64:PLATFORM=x64
-x64:CXX=g++
 x64:$(TARGET)
 	@echo "make x64"	
 
 help:
-	@echo "make [x64|arm] [DEBUG=1|0], the first one is the default"
+	@echo "make [x64|arm] [DEBUG=1|0] [SRC_SUFFIX=.cpp|.c], the first one is the default"
 	@echo "make <help|clean|distclean>"
 
 
 #*************************************************************
 # there is no need modification below
 #*************************************************************
-SRC:=$(foreach mod,$(MODULE_DIR),$(wildcard $(mod)/*.cpp))
-OBJ:=$(patsubst %.cpp,%.o,$(SRC))
-DEP:=$(patsubst %.cpp,%.d,$(SRC))
+SRC:=$(foreach mod,$(MODULE_DIR),$(wildcard $(mod)/*$(SRC_SUFFIX)))
+OBJ:=$(patsubst %$(SRC_SUFFIX),%.o,$(SRC))
+DEP:=$(patsubst %$(SRC_SUFFIX),%.d,$(SRC))
 DEP+=$(TARGET).d
 CXXFLAGS+=$(addprefix -I,$(INCLUDE_DIR) $(MODULE_DIR))
 
@@ -57,8 +60,8 @@ BUILD = $(shell date +%c)
 VERSION = "$(TARGET) version $(MAJOR).$(MINOR).$(REVISION)\ncompiled $(BUILD)\n"
 $(TARGET).o:CXXFLAGS += -D'VERSION=$(VERSION)' -D'NAME="$(TARGET)"'
 
-CC=$(CXX)
-CROSS_COMPILE=$(subst g++,,$(CXX))
+CC=$(CROSS_COMPILE)g++
+CXX=$(CROSS_COMPILE)g++
 AR=$(CROSS_COMPILE)ar
 
 $(TARGET):$(TARGET).o $(OBJ)
