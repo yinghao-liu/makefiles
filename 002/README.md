@@ -5,9 +5,13 @@ CMake of a large project
 `mkdir build && cd build && cmake .. && make`, then
 `make install` or `ctest`
 
+
+
 ## Description
 
 cmake使用一个CMakeLists.txt文件作为构建说明。
+
+
 
 ### simple 
 
@@ -22,6 +26,8 @@ project(main)
 # add the executable
 add_executable(main main.cpp)
 ```
+
+
 
 ### 添加头文件
 
@@ -40,6 +46,8 @@ target_include_directories(<target> [SYSTEM] [AFTER|BEFORE]
 ```cmake
 target_include_directories(main PUBLIC "${PROJECT_SOURCE_DIR}/include")
 ```
+
+
 
 ### 添加库
 
@@ -133,6 +141,57 @@ configure_file(main.h.in main.h)
 
 
 
+### 指定编译器版本
+
+c通过设置`CMAKE_C_STANDARD`和`CMAKE_C_STANDARD_REQUIRED`变量实现
+
+c++通过设置`CMAKE_CXX_STANDARD` 和`CMAKE_CXX_STANDARD_REQUIRED`变量实现
+
+需要在调用`add_executable`命令之前设置。
+
+```cmake
+# specify the C++ standard
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+```
+
+
+
+
+
+### 指定预定义值
+
+使用`add_compile_definitions`（3.12之后可用）
+
+
+
+### 指定编译选项
+
+指定编译时的选项，例如-g
+
+使用`add_compile_options`命令添加，例如
+
+```cmake
+add_compile_options(-g)
+add_compile_options(-Wall -Wextra -pedantic -Werror)
+```
+
+使用`target_compile_options`添加指定target的编译选项
+
+```
+target_compile_options(<target> [BEFORE]
+  <INTERFACE|PUBLIC|PRIVATE> [items1...]
+  [<INTERFACE|PUBLIC|PRIVATE> [items2...] ...])
+```
+
+
+
+### 指定链接选项
+
+使用`add_link_options`(3.13之后可用)
+
+
+
 
 
 
@@ -142,7 +201,7 @@ configure_file(main.h.in main.h)
 创建一个交叉编译的cmake文件arm-linux.cmake，如下：
 
 ```cmake
-set(CMAKE_SYSTEM_NAME linux)
+set(CMAKE_SYSTEM_NAME Linux)
 set(CMAKE_SYSTEM_PROCESSOR arm)
 
 set(CMAKE_C_COMPILER arm-linux-gnueabi-gcc)
@@ -235,4 +294,6 @@ so, if you change the option you should remove the entries from CMake cache by u
 5. [CMake 中的 PUBLIC，PRIVATE，INTERFACE](https://www.jianshu.com/p/07761ff7838e)
 6. [Cmake Cross Compile UserGuide-交叉编译](https://www.cnblogs.com/uestc-mm/p/15666249.html)
 7. [cmake 交叉编译](https://cmake.org/cmake/help/latest/manual/cmake-toolchains.7.html)
+8. [C_STANDARD](https://cmake.org/cmake/help/latest/prop_tgt/C_STANDARD.html)
+9. [CXX_STANDARD](https://cmake.org/cmake/help/latest/prop_tgt/CXX_STANDARD.html)
 
