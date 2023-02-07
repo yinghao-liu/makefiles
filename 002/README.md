@@ -194,6 +194,14 @@ target_compile_options(<target> [BEFORE]
 
 
 
+### 显示详细编译过程
+
+如果想看实际执行的编译指令，比如`gcc -g -o main main.o`，可使用下面几种方法：
+
+1.  执行命令cmake时追加：-DCMAKE_VERBOSE_MAKEFILE=ON
+2.  在CMakeLists.txt中添加：set(CMAKE_VERBOSE_MAKEFILEON ON)
+3.  执行make时追加： VERBOSE=1
+
 
 
 ### 交叉编译
@@ -296,4 +304,5 @@ so, if you change the option you should remove the entries from CMake cache by u
 7. [cmake 交叉编译](https://cmake.org/cmake/help/latest/manual/cmake-toolchains.7.html)
 8. [C_STANDARD](https://cmake.org/cmake/help/latest/prop_tgt/C_STANDARD.html)
 9. [CXX_STANDARD](https://cmake.org/cmake/help/latest/prop_tgt/CXX_STANDARD.html)
+10. [让cmake在编译过程中打印编印信息](https://blog.csdn.net/csCrazybing/article/details/107239529)
 
