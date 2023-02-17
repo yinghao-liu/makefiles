@@ -20,6 +20,9 @@ FSANITIZE=-fsanitize=address #-fsanitize-recover=address
 CXXFLAGS+=-g $(FSANITIZE)
 LDFLAGS+=$(FSANITIZE)
 endif
+ifeq ($(SRC_SUFFIX),.c)
+CFLAGS=$(CXXFLAGS)
+endif
 
 # main.o:CXXFLAGS+=`pkg-config --cflags opencv`
 # LDLIBS=`pkg-config --libs opencv` -l3rdparty
